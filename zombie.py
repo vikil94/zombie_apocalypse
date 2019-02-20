@@ -1,5 +1,4 @@
 import random
-import math
 
 class Zombie:
 
@@ -37,7 +36,8 @@ class Zombie:
 
     while count < new_zombies:
       speed = random.randint(1, Zombie.max_speed)
-      Zombie.horde.append(Zombie(speed))
+      strength = random.randint(1, Zombie.max_strength)
+      Zombie.horde.append(Zombie(speed,strength))
       count += 1
 
   @classmethod
@@ -47,8 +47,9 @@ class Zombie:
     and sometimes the zombie plague level increases. Added increase_plague_level
     so the plague increases a little everyday
     """
-    Zombie.spawn()
+
     Zombie.some_die_off()
+    Zombie.spawn()
     Zombie.increase_plague_level()
 
   @classmethod
@@ -79,13 +80,13 @@ class Zombie:
     won_fight = self.fight()
 
     if outrun:
-      return 'You escaped!'
+        return 'You escaped!'
     elif won_fight:
         new_zombie = Zombie(random.randit(1, Zombie.max_speed), random.randit(1, Zombie.max_strength))
         Zombie.horde.append(new_zombie)
         return "Oh no, you were bit, you're a zombie now!"
     else:
-      return 'You died.'
+        return 'You died.'
 
   def chase(self):
     """Represents you trying to outrun this particular zombie.
@@ -95,12 +96,24 @@ class Zombie:
     return your_speed > self.speed
 
   def fight(self):
-"""fight represents what happens when you try to fight a zombie."""
-    your_strength = random.randit(1, Zombie.max_strength)
+    """fight represents what happens when you try to fight a zombie."""
+
+    your_strength = random.randint(1, Zombie.max_strength)
     return your_strength > self.strength
 
 
-
-
-zombie1 = Zombie(3, 5)
-print(zombie1)
+print(Zombie.horde) # []
+Zombie.new_day()
+print(Zombie.horde) # [<__main__.Zombie object at 0x7f6f594f0d30>, <__main__.Zombie object at 0x7f6f594f0b70>, <__main__.Zombie object at 0x7f6f594f0d68>]
+zombie1 = Zombie.horde[0]
+print(zombie1) # Speed: 1 -- Strength: 7
+zombie2 = Zombie.horde[1]
+print(zombie2) # Speed: 2 -- Strength: 7
+print(zombie1.encounter()) # You escaped!
+print(zombie2.encounter()) # You fought the zombie and caught the plague.  You are now a zombie too.  Raaaawrgh
+Zombie.new_day()
+print(Zombie.horde) # [<__main__.Zombie object at 0x7f6f594f0d30>, <__main__.Zombie object at 0x7f6f594efef0>, <__main__.Zombie object at 0x7f6f594f0c50>, <__main__.Zombie object at 0x7f6f594f0cc0>]
+zombie1 = Zombie.horde[0]
+zombie2 = Zombie.horde[1]
+print(zombie1.encounter()) # You died!
+print(zombie2.encounter()) # You escaped!
