@@ -82,7 +82,7 @@ class Zombie:
     if outrun:
         return 'You escaped!'
     elif won_fight:
-        new_zombie = Zombie(random.randit(1, Zombie.max_speed), random.randit(1, Zombie.max_strength))
+        new_zombie = Zombie(random.randint(1, Zombie.max_speed), random.randint(1, Zombie.max_strength))
         Zombie.horde.append(new_zombie)
         return "Oh no, you were bit, you're a zombie now!"
     else:
